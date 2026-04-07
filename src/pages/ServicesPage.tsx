@@ -1,109 +1,42 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { motion, type Variants } from "framer-motion";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
-import { 
-  Droplets, 
-  Wrench, 
-  Thermometer, 
-  Search, 
-  ShieldCheck, 
-  Zap, 
-  ArrowRight, 
-  Phone, 
-  Snowflake, 
-  Settings2 
-} from "lucide-react";
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: "easeOut" as const }
-  })
-};
+import { Droplets, Wrench, Thermometer, Search, ShieldCheck, Zap } from "lucide-react";
 export function ServicesPage() {
   const allServices = [
-    { name: "Emergency Plumber", slug: "emergency-plumbing", icon: ShieldCheck, price: "24/7 Priority", desc: "Immediate dispatch for floods, burst pipes, and hazardous sewage backups across Mississauga." },
-    { name: "Drain Cleaning", slug: "drain-cleaning", icon: Search, price: "From $99", desc: "Industrial-grade hydro-jetting and precision snaking for total blockage removal." },
-    { name: "Pipe Repair", slug: "pipe-repair", icon: Wrench, price: "From $149", desc: "Advanced acoustic leak detection and permanent repairs for water and sewer lines." },
-    { name: "Toilet Services", slug: "toilet-services", icon: Settings2, price: "From $89", desc: "Fixing recurring clogs, running valves, and installing high-efficiency modern fixtures." },
-    { name: "Water Heaters", slug: "water-heaters", icon: Thermometer, price: "Install & Repair", desc: "Energy-efficient tankless solutions and professional gas/electric tank servicing." },
-    { name: "Sump Pumps", slug: "sump-pumps", icon: Zap, price: "Flood Protection", desc: "Battery backup systems and maintenance to keep your basement dry during Peel storms." },
-    { name: "Frozen Pipe Care", slug: "frozen-pipes", icon: Snowflake, price: "Winter Service", desc: "Safe thawing and winterization upgrades to prevent burst pipes in sub-zero weather." },
+    { name: "Drain Cleaning", icon: Search, price: "From $99", desc: "Complete snaking and hydro-jetting services." },
+    { name: "Pipe Repair", icon: Wrench, price: "From $149", desc: "Expert leak detection and pipe restoration." },
+    { name: "Water Heaters", icon: Thermometer, price: "Installation & Repair", desc: "Gas, electric, and tankless specialists." },
+    { name: "Sump Pumps", icon: Zap, price: "Protect your basement", desc: "Battery backup and new installation." },
+    { name: "Emergency Dispatch", icon: ShieldCheck, price: "24/7 Response", desc: "Immediate help for plumbing catastrophes." },
+    { name: "Toilet Repair", icon: Droplets, price: "From $89", desc: "Fast fixes for leaks and clogs." },
   ];
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="py-12 md:py-20 lg:py-24 space-y-20">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center space-y-6"
-        >
-          <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-black uppercase tracking-widest">
-            Mississauga Certified Expertise
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold tracking-tight leading-tight">
-            Comprehensive <br/><span className="text-primary text-glow">Plumbing Solutions</span>
-          </h1>
-          <p className="text-muted-foreground text-xl max-w-3xl mx-auto leading-relaxed">
-            Uncompromising quality for Peel Region homeowners. Every service is performed by a licensed Red Seal Master Plumber with upfront, flat-rate pricing.
-          </p>
-        </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {allServices.map((service, idx) => (
-            <motion.div
-              key={idx}
-              custom={idx}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={cardVariants}
-            >
-              <GlassCard className="flex flex-col h-full group hover:translate-y-[-8px] transition-all duration-500 hover:border-primary/30 p-8">
-                <div className="flex items-center gap-5 mb-8">
-                  <div className="p-4 bg-primary/10 rounded-2xl text-primary transition-all group-hover:bg-primary group-hover:text-primary-foreground">
-                    <service.icon className="w-8 h-8" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold leading-tight">{service.name}</h3>
-                    <p className="text-primary text-sm font-black uppercase tracking-widest mt-1">{service.price}</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground mb-8 flex-grow leading-relaxed">
-                  {service.desc}
-                </p>
-                <Link to={`/services/${service.slug}`} className="w-full">
-                  <Button variant="outline" className="w-full border-white/10 hover:bg-white/5 h-14 rounded-xl gap-3 text-lg group">
-                    View Details <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-              </GlassCard>
-            </motion.div>
-          ))}
-        </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="rounded-[3rem] bg-destructive p-8 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-12 shadow-2xl shadow-destructive/20 overflow-hidden relative"
-        >
-          <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-            <ShieldCheck className="w-64 h-64" />
-          </div>
-          <div className="space-y-4 text-center lg:text-left relative z-10">
-            <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">Active Crisis?</h2>
-            <p className="text-white/80 text-xl font-medium max-w-xl">
-              Our emergency dispatchers are available 24/7 to send a Master Plumber to your door in less than 30 minutes.
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 space-y-12">
+      <div className="text-center space-y-4">
+        <h1 className="text-5xl font-bold">Expert Services in Mississauga</h1>
+        <p className="text-muted-foreground text-xl max-w-2xl mx-auto">
+          Whatever your plumbing challenge, our Red Seal team has the expertise to solve it permanently.
+        </p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {allServices.map((service, idx) => (
+          <GlassCard key={idx} className="flex flex-col h-full">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="p-3 bg-primary/10 rounded-xl text-primary">
+                <service.icon className="w-8 h-8" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold">{service.name}</h3>
+                <p className="text-primary text-sm font-medium">{service.price}</p>
+              </div>
+            </div>
+            <p className="text-muted-foreground mb-8 flex-grow leading-relaxed">
+              {service.desc}
             </p>
-          </div>
-          <a href="tel:6475504003" className="relative z-10 w-full lg:w-auto">
-            <Button className="w-full lg:w-auto bg-white text-destructive hover:bg-white/90 text-3xl font-black py-10 px-16 rounded-[2rem] h-auto shadow-2xl group transition-all">
-              (647) 550-4003
-            </Button>
-          </a>
-        </motion.div>
+            <Button className="w-full btn-premium">Book This Service</Button>
+          </GlassCard>
+        ))}
       </div>
     </div>
   );
