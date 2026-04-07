@@ -1,6 +1,6 @@
 # Cloudflare AI Chatbot Template
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/akshayvorkes-source/mississauga-plumbing-services-premium-booking-portal)
 
 A production-ready, full-stack AI chatbot application built on Cloudflare Workers. Features persistent chat sessions powered by Durable Objects and Agents SDK, real-time streaming responses, tool calling (weather, web search, MCP integration), model switching, and a modern React UI with Shadcn components.
 
@@ -108,7 +108,7 @@ Add custom routes in `worker/userRoutes.ts`. Extend tools in `worker/tools.ts` o
 
 3. Or use the one-click deploy:
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/akshayvorkes-source/mississauga-plumbing-services-premium-booking-portal)
 
 **Post-Deploy**:
 - Bind custom domain in Cloudflare Dashboard.
