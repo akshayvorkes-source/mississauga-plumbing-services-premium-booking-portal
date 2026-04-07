@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Phone, Calendar, Menu, Droplets } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BookingModal } from "@/components/BookingModal";
@@ -15,11 +15,11 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col bg-mesh-navy text-foreground">
       {/* Header */}
-      <header 
+      <header
         className={cn(
           "sticky top-0 z-50 w-full transition-all duration-300 border-b",
-          scrolled 
-            ? "glass-panel bg-background/80 backdrop-blur-xl py-2 border-white/10" 
+          scrolled
+            ? "glass-panel bg-background/80 backdrop-blur-xl py-2 border-white/10"
             : "bg-transparent py-4 border-transparent"
         )}
       >
@@ -72,7 +72,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-3 text-sm text-muted-foreground">
                 <li><Link to="/services/drain-cleaning" className="hover:text-primary transition-colors">Drain Cleaning</Link></li>
                 <li><Link to="/services/pipe-repair" className="hover:text-primary transition-colors">Pipe Repair</Link></li>
-                <li><Link to="/emergency" className="hover:text-primary transition-colors text-destructive">Emergency Repair</Link></li>
+                <li><Link to="/emergency" className="hover:text-primary transition-colors text-destructive font-bold">Emergency Repair</Link></li>
               </ul>
             </div>
             <div>
@@ -89,24 +89,24 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p>123 Square One Dr, Mississauga, ON</p>
                 <p>Open 24/7 for Emergencies</p>
-                <a href="tel:6475504003" className="text-primary font-bold block">(647) 550-4003</a>
+                <a href="tel:6475504003" className="text-primary font-bold block text-lg tracking-tight">(647) 550-4003</a>
               </div>
             </div>
           </div>
           <div className="mt-16 pt-8 border-t border-white/5 text-center">
             <p className="text-xs text-muted-foreground/60">© {new Date().getFullYear()} Mississauga Plumbing Pro. Licensed Master Plumbers.</p>
-            <p className="mt-2 text-[10px] text-muted-foreground/40 uppercase tracking-widest">Global request limits may apply to AI-assisted features.</p>
+            <p className="mt-2 text-[10px] text-muted-foreground/40 uppercase tracking-[0.2em]">Global request limits may apply to AI-assisted features.</p>
           </div>
         </div>
       </footer>
       {/* Mobile Sticky CTA */}
       <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden glass-panel border-t border-white/20 p-4 flex gap-4 animate-slide-up">
         <a href="tel:6475504003" className="flex-1">
-          <Button variant="destructive" className="w-full h-12 font-bold gap-2 rounded-xl shadow-lg shadow-destructive/20">
+          <Button variant="destructive" className="w-full h-12 font-bold gap-2 rounded-xl shadow-lg shadow-destructive/20 active:scale-95 transition-transform">
             <Phone className="w-4 h-4" /> Call Now
           </Button>
         </a>
-        <Button onClick={() => setIsBookingOpen(true)} className="flex-1 h-12 btn-premium gap-2 rounded-xl">
+        <Button onClick={() => setIsBookingOpen(true)} className="flex-1 h-12 btn-premium gap-2 rounded-xl active:scale-95 transition-transform">
           <Calendar className="w-4 h-4" /> Book Online
         </Button>
       </div>

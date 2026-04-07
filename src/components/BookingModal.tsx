@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Clock, Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 const bookingSchema = z.object({
   name: z.string().min(2, "Full name is required"),
   phone: z.string().min(10, "Valid 10-digit phone number required"),
@@ -38,21 +39,26 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
     },
   });
   const isEmergency = form.watch("isEmergency");
-  async function onSubmit(data: BookingValues) {
+  const onSubmit = useCallback(async (data: BookingValues) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    console.log("Booking Dispatch:", data);
-    toast.success("Request Successfully Dispatched!", {
-      description: data.isEmergency
-        ? "Priority alert sent. A technician will call you in less than 5 minutes."
-        : "Booking request confirmed. Our scheduling team will reach out shortly.",
-      duration: 6000,
-    });
-    setIsSubmitting(false);
-    onOpenChange(false);
-    form.reset();
-  }
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      console.log("Booking Dispatch:", data);
+      toast.success("Request Successfully Dispatched!", {
+        description: data.isEmergency
+          ? "Priority alert sent. A technician will call you in less than 5 minutes."
+          : "Booking request confirmed. Our scheduling team will reach out shortly.",
+        duration: 6000,
+      });
+      onOpenChange(false);
+      form.reset();
+    } catch (error) {
+      toast.error("Failed to send request. Please call (647) 550-4003.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [onOpenChange, form]);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[450px] glass-panel border-white/20 text-foreground backdrop-blur-2xl p-0 overflow-hidden rounded-[2rem]">
@@ -105,7 +111,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                     <FormControl>
                       <Input placeholder="John Doe" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition-all" />
                     </FormControl>
-                    <FormMessage className="text-[#ff4d4d] font-bold" />
+                    <FormMessage className="text-red-500 font-bold" />
                   </FormItem>
                 )}
               />
@@ -117,9 +123,9 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                     <FormItem>
                       <FormLabel className="font-bold text-xs uppercase tracking-widest text-muted-foreground">Phone</FormLabel>
                       <FormControl>
-                        <Input placeholder="(647) ..." {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
+                        <Input placeholder="(647) 550-4003" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
                       </FormControl>
-                      <FormMessage className="text-[#ff4d4d] font-bold" />
+                      <FormMessage className="text-red-500 font-bold" />
                     </FormItem>
                   )}
                 />
@@ -132,7 +138,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                       <FormControl>
                         <Input placeholder="name@email.com" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
                       </FormControl>
-                      <FormMessage className="text-[#ff4d4d] font-bold" />
+                      <FormMessage className="text-red-500 font-bold" />
                     </FormItem>
                   )}
                 />
@@ -157,7 +163,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                         <SelectItem value="other">General Maintenance</SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormMessage className="text-[#ff4d4d] font-bold" />
+                    <FormMessage className="text-red-500 font-bold" />
                   </FormItem>
                 )}
               />
@@ -171,18 +177,18 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                       <FormControl>
                         <Input type="date" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
                       </FormControl>
-                      <FormMessage className="text-[#ff4d4d] font-bold" />
+                      <FormMessage className="text-red-500 font-bold" />
                     </FormItem>
                   )}
                 />
               )}
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 disabled={isSubmitting}
                 className={cn(
                   "w-full h-14 rounded-2xl text-xl font-black transition-all shadow-xl",
-                  isEmergency 
-                    ? "bg-destructive hover:bg-destructive/90 shadow-destructive/20" 
+                  isEmergency
+                    ? "bg-destructive hover:bg-destructive/90 shadow-destructive/20"
                     : "btn-premium shadow-primary/20"
                 )}
               >

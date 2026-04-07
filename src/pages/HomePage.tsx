@@ -1,17 +1,16 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Shield, Clock, Award, Star, ArrowRight, Wrench, Thermometer, Search, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { BookingModal } from "@/components/BookingModal";
 import { ServiceAreaMap } from "@/components/ServiceAreaMap";
 import { Link } from "react-router-dom";
-const fadeInUp = {
+const fadeInUp: Variants = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.6, ease: "easeOut" }
 };
+const fadeTransition = { duration: 0.6, ease: "easeOut" as const };
 export function HomePage() {
   const [isBookingOpen, setIsBookingOpen] = React.useState(false);
   const stats = [
@@ -57,7 +56,7 @@ export function HomePage() {
               <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight tracking-tight">
                 Mississauga’s <span className="text-primary text-glow relative inline-block">
                   24/7 Experts
-                  <motion.span 
+                  <motion.span
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
                     animate={{ x: ['-100%', '200%'] }}
                     transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
@@ -92,7 +91,14 @@ export function HomePage() {
         </div>
       </section>
       {/* Stats Section */}
-      <motion.section {...fadeInUp} className="py-20 border-y border-white/5 bg-white/5 backdrop-blur-md">
+      <motion.section 
+        variants={fadeInUp}
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, margin: "-100px" }}
+        transition={fadeTransition}
+        className="py-20 border-y border-white/5 bg-white/5 backdrop-blur-md"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             {stats.map((stat, idx) => (
@@ -107,7 +113,14 @@ export function HomePage() {
       {/* Services Grid */}
       <section className="py-24 md:py-32 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeInUp} className="text-center mb-20 space-y-4">
+          <motion.div 
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true, margin: "-100px" }}
+            transition={fadeTransition}
+            className="text-center mb-20 space-y-4"
+          >
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight">The Pro Standard</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Precision plumbing for residential and commercial properties throughout the Mississauga area.
@@ -141,10 +154,16 @@ export function HomePage() {
           </div>
         </div>
       </section>
-      {/* Service Area Map */}
       <ServiceAreaMap />
       {/* Emergency Callout */}
-      <motion.section {...fadeInUp} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <motion.section 
+        variants={fadeInUp}
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, margin: "-100px" }}
+        transition={fadeTransition}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
+      >
         <div className="rounded-[3rem] bg-destructive p-12 relative overflow-hidden shadow-2xl shadow-destructive/30">
           <div className="absolute top-0 right-0 p-8 opacity-10">
             <Clock className="w-64 h-64" />
@@ -174,7 +193,14 @@ export function HomePage() {
       <section className="py-24 bg-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <motion.div {...fadeInUp} className="space-y-10">
+            <motion.div 
+              variants={fadeInUp}
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true, margin: "-100px" }}
+              transition={fadeTransition}
+              className="space-y-10"
+            >
               <h2 className="text-4xl md:text-5xl font-bold leading-tight">The Trusted Choice for <br/>Mississauga Homeowners</h2>
               <div className="space-y-8">
                 {[
@@ -194,7 +220,7 @@ export function HomePage() {
                 ))}
               </div>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, rotateY: 20 }}
               whileInView={{ opacity: 1, rotateY: 0 }}
               viewport={{ once: true }}

@@ -50,16 +50,16 @@ export function ServiceDetailPage() {
       {/* Hero Section */}
       <section className="relative py-24 md:py-40 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src={data.hero} 
-            alt={data.title} 
-            className="w-full h-full object-cover opacity-20 grayscale" 
+          <img
+            src={data.hero}
+            alt={data.title}
+            className="w-full h-full object-cover opacity-20 grayscale"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             className="max-w-4xl space-y-8"
@@ -84,7 +84,7 @@ export function ServiceDetailPage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
           <div className="space-y-16">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -109,8 +109,8 @@ export function ServiceDetailPage() {
               <div className="space-y-8 relative">
                 <div className="absolute left-6 top-8 bottom-8 w-1 bg-gradient-to-b from-primary/50 to-transparent" />
                 {data.steps.map((s: string, i: number) => (
-                  <motion.div 
-                    key={i} 
+                  <motion.div
+                    key={i}
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
@@ -155,7 +155,7 @@ export function ServiceDetailPage() {
                 </Accordion>
               </GlassCard>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
