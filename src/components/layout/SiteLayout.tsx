@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Phone, Calendar, Menu, Droplets } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { Phone, Calendar, Menu, Droplets, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { BookingModal } from "@/components/BookingModal";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 export function SiteLayout({ children }: { children: React.ReactNode }) {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/services" },
+    { name: "Emergency", path: "/emergency", urgent: true },
+  ];
   return (
     <div className="min-h-screen flex flex-col bg-mesh-navy text-foreground">
       {/* Header */}
@@ -32,10 +44,22 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
               Mississauga<span className="text-primary">Plumbing</span>Pro
             </span>
           </Link>
+          {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8 font-medium">
-            <Link to="/" className="hover:text-primary transition-colors">Home</Link>
-            <Link to="/services" className="hover:text-primary transition-colors">Services</Link>
-            <Link to="/emergency" className="text-destructive font-bold hover:opacity-80 transition-opacity">EMERGENCY</Link>
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className={cn(
+                  "transition-colors",
+                  link.urgent 
+                    ? "text-destructive font-bold hover:opacity-80" 
+                    : "hover:text-primary"
+                )}
+              >
+                {link.name}
+              </Link>
+            ))}
           </nav>
           <div className="flex items-center gap-4">
             <a href="tel:6475504003" className="hidden lg:flex items-center gap-2 text-primary font-bold hover:text-glow transition-all">
@@ -45,9 +69,52 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
             <Button onClick={() => setIsBookingOpen(true)} className="btn-premium hidden sm:flex">
               Book Online
             </Button>
-            <Button variant="ghost" size="icon" className="md:hidden w-11 h-11">
-              <Menu className="w-6 h-6" />
-            </Button>
+            {/* Mobile Menu Trigger */}
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden w-11 h-11 bg-white/5 border border-white/10 hover:bg-white/10">
+                  <Menu className="w-6 h-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="glass-panel border-l border-white/10 bg-background/95 backdrop-blur-2xl p-0 w-[300px]">
+                <SheetHeader className="p-6 border-b border-white/5 text-left">
+                  <SheetTitle className="flex items-center gap-2">
+                    <Droplets className="w-5 h-5 text-primary" />
+                    <span className="font-bold">Navigation</span>
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col p-6 gap-6">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      className={cn(
+                        "text-xl font-bold py-2 border-b border-white/5",
+                        link.urgent ? "text-destructive" : "text-foreground"
+                      )}
+                    >
+                      {link.name}
+                    </Link>
+                  ))}
+                  <div className="pt-6 space-y-4">
+                    <a href="tel:6475504003" className="block">
+                      <Button variant="destructive" className="w-full h-14 font-black text-lg gap-3 rounded-2xl">
+                        <Phone className="w-5 h-5" /> CALL NOW
+                      </Button>
+                    </a>
+                    <Button 
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsBookingOpen(true);
+                      }} 
+                      className="w-full h-14 btn-premium font-black text-lg gap-3 rounded-2xl"
+                    >
+                      <Calendar className="w-5 h-5" /> BOOK ONLINE
+                    </Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </header>
@@ -100,7 +167,7 @@ export function SiteLayout({ children }: { children: React.ReactNode }) {
         </div>
       </footer>
       {/* Mobile Sticky CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 sm:hidden glass-panel border-t border-white/20 p-4 flex gap-4 animate-slide-up">
+      <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden glass-panel border-t border-white/20 p-4 flex gap-4 animate-slide-up">
         <a href="tel:6475504003" className="flex-1">
           <Button variant="destructive" className="w-full h-12 font-bold gap-2 rounded-xl shadow-lg shadow-destructive/20 active:scale-95 transition-transform">
             <Phone className="w-4 h-4" /> Call Now

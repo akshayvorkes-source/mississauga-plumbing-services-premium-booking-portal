@@ -1,18 +1,15 @@
 import React from "react";
 import { motion, type Variants } from "framer-motion";
-import { 
-  Shield, 
-  Clock, 
-  Award, 
-  Star, 
-  ArrowRight, 
-  Wrench, 
-  Thermometer, 
-  Search, 
-  CheckCircle2, 
-  ShieldCheck, 
+import {
+  Shield,
+  ArrowRight,
+  Wrench,
+  Search,
+  ShieldCheck,
   Snowflake,
-  Activity
+  CheckCircle2,
+  Award,
+  Star
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
@@ -35,7 +32,7 @@ export function HomePage() {
   const featuredServices = [
     { title: "Emergency Plumber", slug: "emergency-plumbing", desc: "Priority dispatch for floods and pipe bursts.", icon: ShieldCheck },
     { title: "Drain Cleaning", slug: "drain-cleaning", desc: "Precision hydro-jetting for total blockage removal.", icon: Search },
-    { title: "Pipe Repair", slug: "pipe-repair", icon: Wrench, desc: "Leak detection and trenchless pipe restoration.", slug_real: "pipe-repair" },
+    { title: "Pipe Repair", slug: "pipe-repair", icon: Wrench, desc: "Leak detection and trenchless pipe restoration." },
     { title: "Frozen Pipes", slug: "frozen-pipes", desc: "Winter care and safe thawing for Peel winters.", icon: Snowflake },
   ];
   return (
@@ -101,7 +98,7 @@ export function HomePage() {
         variants={fadeInUp}
         initial="initial"
         whileInView="whileInView"
-        viewport={{ once: true, margin: "-100px" }}
+        viewport={{ once: true, amount: 0.3 }}
         transition={fadeTransition}
         className="py-16 border-y border-white/5 bg-white/5 backdrop-blur-md"
       >
@@ -123,7 +120,7 @@ export function HomePage() {
             variants={fadeInUp}
             initial="initial"
             whileInView="whileInView"
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={fadeTransition}
             className="text-center mb-20 space-y-4"
           >
@@ -138,7 +135,7 @@ export function HomePage() {
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, amount: 0.1 }}
                 transition={{ delay: idx * 0.1 }}
               >
                 <GlassCard className="h-full space-y-6 group hover:translate-y-[-12px] transition-all duration-500 hover:border-primary/50">
@@ -177,7 +174,7 @@ export function HomePage() {
               variants={fadeInUp}
               initial="initial"
               whileInView="whileInView"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               className="space-y-10"
             >
               <h2 className="text-4xl md:text-5xl font-bold leading-tight">Trusted by Homeowners <br/>Across Peel Region</h2>
@@ -202,7 +199,7 @@ export function HomePage() {
             <motion.div
               initial={{ opacity: 0, rotateY: 20 }}
               whileInView={{ opacity: 1, rotateY: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.3 }}
               className="relative"
             >
               <GlassCard className="p-16 border-white/20 backdrop-blur-2xl rounded-4xl text-center space-y-8" hoverable={false}>
