@@ -42,7 +42,6 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
   const onSubmit = useCallback(async (data: BookingValues) => {
     setIsSubmitting(true);
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       console.log("Booking Dispatch:", data);
       toast.success("Request Successfully Dispatched!", {
@@ -61,20 +60,20 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
   }, [onOpenChange, form]);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[450px] glass-panel border-white/20 text-foreground backdrop-blur-2xl p-0 overflow-hidden rounded-[2rem]">
+      <DialogContent className="sm:max-w-[480px] glass-panel border-white/20 text-foreground backdrop-blur-2xl p-0 overflow-hidden rounded-[2rem]">
         <div className="p-8">
           <DialogHeader className="mb-6">
             <DialogTitle className="text-3xl font-bold tracking-tight">Professional Booking</DialogTitle>
             <DialogDescription className="text-muted-foreground text-lg leading-snug">
-              Secure your appointment with Mississauga's top-rated plumbers.
+              Secure Mississauga's top-rated plumbers for your home or business.
             </DialogDescription>
           </DialogHeader>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-destructive/10 border border-destructive/20 shadow-inner group">
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-destructive/10 border border-destructive/20 shadow-inner">
                 <div className="space-y-0.5">
-                  <FormLabel className="text-destructive font-black text-sm uppercase tracking-widest">Emergency Priority?</FormLabel>
-                  <p className="text-xs text-muted-foreground/80 italic font-medium">Immediate 24/7 Response Available</p>
+                  <FormLabel className="text-destructive font-black text-sm uppercase tracking-widest">Emergency Dispatch?</FormLabel>
+                  <p className="text-xs text-muted-foreground/80 italic font-medium">Immediate 24/7 Response Units</p>
                 </div>
                 <FormField
                   control={form.control}
@@ -97,7 +96,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                   <div className="flex items-center gap-3">
                     <Clock className="h-5 w-5 shrink-0" />
                     <AlertDescription className="font-black uppercase text-xs tracking-widest">
-                      High Priority Dispatch Initiated
+                      High Priority Alert Initiated
                     </AlertDescription>
                   </div>
                 </Alert>
@@ -109,7 +108,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                   <FormItem>
                     <FormLabel className="font-bold text-xs uppercase tracking-widest text-muted-foreground">Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition-all" />
+                      <Input placeholder="Your Name" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
                     </FormControl>
                     <FormMessage className="text-red-500 font-bold" />
                   </FormItem>
@@ -123,7 +122,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                     <FormItem>
                       <FormLabel className="font-bold text-xs uppercase tracking-widest text-muted-foreground">Phone</FormLabel>
                       <FormControl>
-                        <Input placeholder="(647) 550-4003" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
+                        <Input placeholder="(647) 000-0000" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
                       </FormControl>
                       <FormMessage className="text-red-500 font-bold" />
                     </FormItem>
@@ -136,7 +135,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                     <FormItem>
                       <FormLabel className="font-bold text-xs uppercase tracking-widest text-muted-foreground">Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="name@email.com" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
+                        <Input placeholder="email@address.com" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
                       </FormControl>
                       <FormMessage className="text-red-500 font-bold" />
                     </FormItem>
@@ -157,10 +156,12 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                       </FormControl>
                       <SelectContent className="glass-panel backdrop-blur-3xl rounded-xl border-white/20">
                         <SelectItem value="drain">Drain Cleaning & Jetting</SelectItem>
-                        <SelectItem value="repair">Pipe & Leak Repair</SelectItem>
-                        <SelectItem value="heater">Water Heater Install/Fix</SelectItem>
+                        <SelectItem value="pipe">Pipe Repair & Leak Detection</SelectItem>
+                        <SelectItem value="toilet">Toilet Repair & Install</SelectItem>
+                        <SelectItem value="heater">Water Heater Services</SelectItem>
                         <SelectItem value="sump">Sump Pump Protection</SelectItem>
-                        <SelectItem value="other">General Maintenance</SelectItem>
+                        <SelectItem value="frozen">Frozen Pipe / Winter Care</SelectItem>
+                        <SelectItem value="emergency">Other Urgent Plumbing</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage className="text-red-500 font-bold" />
@@ -173,7 +174,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                   name="preferredDate"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="font-bold text-xs uppercase tracking-widest text-muted-foreground">Preferred Schedule</FormLabel>
+                      <FormLabel className="font-bold text-xs uppercase tracking-widest text-muted-foreground">Preferred Date</FormLabel>
                       <FormControl>
                         <Input type="date" {...field} className="h-12 bg-white/5 border-white/10 rounded-xl focus:border-primary transition-all" />
                       </FormControl>
@@ -194,10 +195,10 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
               >
                 {isSubmitting ? (
                   <div className="flex items-center gap-2">
-                    <Loader2 className="w-6 h-6 animate-spin" /> Dispatching...
+                    <Loader2 className="w-6 h-6 animate-spin" /> DISPATCHING...
                   </div>
                 ) : (
-                  isEmergency ? "ALERT EMERGENCY TEAM" : "CONFIRM BOOKING"
+                  isEmergency ? "ALERT EMERGENCY UNIT" : "CONFIRM BOOKING"
                 )}
               </Button>
             </form>

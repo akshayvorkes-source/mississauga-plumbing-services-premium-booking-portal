@@ -1,37 +1,24 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { CheckCircle2, ArrowRight, ShieldCheck, Clock, Hammer, DollarSign, HelpCircle, Phone } from "lucide-react";
+import { 
+  CheckCircle2, 
+  ArrowRight, 
+  ShieldCheck, 
+  Clock, 
+  Hammer, 
+  DollarSign, 
+  HelpCircle, 
+  Phone, 
+  MapPin, 
+  ChevronRight,
+  Info
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { BookingModal } from "@/components/BookingModal";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-const SERVICE_DATA: Record<string, any> = {
-  "drain-cleaning": {
-    title: "Expert Drain Cleaning Mississauga",
-    hero: "https://images.unsplash.com/photo-1504148455328-497c5efdf156?auto=format&fit=crop&q=80&w=2000",
-    description: "Professional snaking, hydro-jetting, and camera inspections for stubborn clogs in Mississauga homes. We restore flow perfectly.",
-    problems: ["Slow draining sinks & tubs", "Main sewer line backups", "Gurgling toilet sounds", "Unpleasant drain odors"],
-    steps: ["CCTV Video Inspection", "Blockage Localization", "High-Pressure Jetting", "Final Flow Verification"],
-    pricing: "From $99",
-    faqs: [
-      { q: "How often should I clean my drains?", a: "For Mississauga homes, especially older ones in areas like Port Credit, we recommend professional cleaning every 24 months." },
-      { q: "Is hydro-jetting safe for old pipes?", a: "Our master plumbers always perform a camera assessment to ensure pipe structural integrity before using high-pressure equipment." }
-    ]
-  },
-  "pipe-repair": {
-    title: "Pipe Repair & Repiping Experts",
-    hero: "https://images.unsplash.com/photo-1585704032915-c3400ca1f965?auto=format&fit=crop&q=80&w=2000",
-    description: "Emergency leak repair and full copper or PEX repiping services with industry-leading warranties and precision execution.",
-    problems: ["Burst copper or PEX pipes", "Corroded plumbing joints", "Persistent pin-hole leaks", "Loud 'Water Hammer' noises"],
-    steps: ["Acoustic Leak Detection", "Precision Section Removal", "Premium Grade Replacement", "System Pressure Testing"],
-    pricing: "From $149",
-    faqs: [
-      { q: "Do you offer emergency pipe repair?", a: "Yes, we have emergency dispatch units stationed across Mississauga ready for immediate deployment 24/7." },
-      { q: "Can you fix polybutylene pipes?", a: "We specialize in full system replacements for outdated polybutylene, upgrading your home to reliable PEX systems." }
-    ]
-  }
-};
+import { SERVICE_DATA } from "@/config/services-data";
 export function ServiceDetailPage() {
   const { slug } = useParams();
   const [isBookingOpen, setIsBookingOpen] = React.useState(false);
@@ -47,26 +34,32 @@ export function ServiceDetailPage() {
   }
   return (
     <div className="space-y-0 overflow-x-hidden">
-      {/* Hero Section */}
+      {/* Dynamic SEO Hero */}
       <section className="relative py-24 md:py-40 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src={data.hero}
+            src={data.heroImage}
             alt={data.title}
-            className="w-full h-full object-cover opacity-20 grayscale"
+            className="w-full h-full object-cover opacity-20 grayscale scale-110"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/80 to-background" />
         </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             className="max-w-4xl space-y-8"
           >
-            <h1 className="text-5xl md:text-8xl font-bold font-display tracking-tight leading-none">{data.title}</h1>
+            <div className="flex items-center gap-2 text-primary font-black uppercase tracking-[0.2em] text-xs">
+              <span className="w-8 h-[2px] bg-primary" /> Verified Service
+            </div>
+            <h1 className="text-5xl md:text-8xl font-bold font-display tracking-tight leading-none">
+              {data.title.split('Mississauga')[0]}
+              <span className="text-primary block md:inline"> Mississauga</span>
+            </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl font-medium">
-              {data.description}
+              {data.shortDesc}
             </p>
             <div className="flex flex-wrap gap-5 pt-4">
               <Button onClick={() => setIsBookingOpen(true)} className="btn-premium h-16 px-12 text-xl rounded-2xl group shadow-2xl">
@@ -74,41 +67,55 @@ export function ServiceDetailPage() {
               </Button>
               <div className="flex items-center gap-4 px-8 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-md">
                 <DollarSign className="w-6 h-6 text-primary" />
-                <span className="font-black text-xl">{data.pricing}</span>
+                <span className="font-black text-xl">{data.pricingTeaser}</span>
               </div>
             </div>
           </motion.div>
         </div>
       </section>
-      {/* Details Grid */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24">
-          <div className="space-y-16">
+      {/* Main Content Sections */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24">
+          {/* Left Column: Deep SEO Content */}
+          <div className="lg:col-span-8 space-y-16">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="prose prose-invert prose-lg max-w-none space-y-8"
+            >
+              <h2 className="text-4xl font-bold tracking-tight text-white mb-6">Expert Service Overview</h2>
+              {data.longContent.map((paragraph, idx) => (
+                <p key={idx} className="text-muted-foreground leading-relaxed text-lg">
+                  {paragraph}
+                </p>
+              ))}
+            </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="space-y-8"
             >
-              <h2 className="text-4xl font-bold flex items-center gap-4 tracking-tight">
-                <ShieldCheck className="text-primary w-10 h-10" /> Problems We Solve
+              <h2 className="text-3xl font-bold flex items-center gap-4 tracking-tight">
+                <ShieldCheck className="text-primary w-8 h-8" /> Issues We Fix Daily
               </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {data.problems.map((p: string, i: number) => (
-                  <GlassCard key={i} className="flex items-center gap-4 p-5 rounded-2xl border-white/5 bg-white/5 hover:bg-white/10 transition-colors" hoverable={false}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {data.problemsList.map((p, i) => (
+                  <div key={i} className="flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
                     <CheckCircle2 className="w-6 h-6 text-primary shrink-0" />
-                    <span className="font-bold text-lg">{p}</span>
-                  </GlassCard>
+                    <span className="font-bold">{p}</span>
+                  </div>
                 ))}
               </div>
             </motion.div>
-            <div className="space-y-8">
-              <h2 className="text-4xl font-bold flex items-center gap-4 tracking-tight">
-                <Hammer className="text-primary w-10 h-10" /> Professional Process
+            <div className="space-y-10">
+              <h2 className="text-3xl font-bold flex items-center gap-4 tracking-tight">
+                <Hammer className="text-primary w-8 h-8" /> The Pro Dispatch Process
               </h2>
               <div className="space-y-8 relative">
-                <div className="absolute left-6 top-8 bottom-8 w-1 bg-gradient-to-b from-primary/50 to-transparent" />
-                {data.steps.map((s: string, i: number) => (
+                <div className="absolute left-6 top-8 bottom-8 w-[2px] bg-white/10" />
+                {data.processSteps.map((s, i) => (
                   <motion.div
                     key={i}
                     initial={{ opacity: 0, x: -20 }}
@@ -121,68 +128,107 @@ export function ServiceDetailPage() {
                       {i + 1}
                     </div>
                     <div>
-                      <h4 className="font-black text-2xl mb-2">{s}</h4>
-                      <p className="text-muted-foreground text-lg leading-relaxed">
-                        Strict adherence to Ontario Plumbing Code and Mississauga local bylaws. Guaranteed professional standard.
+                      <h4 className="font-black text-xl mb-1">{s}</h4>
+                      <p className="text-muted-foreground text-base">
+                        Strict adherence to Ontario Plumbing Code and Mississauga local bylaws. Every step is verified by our senior technicians.
                       </p>
                     </div>
                   </motion.div>
                 ))}
               </div>
             </div>
-          </div>
-          <div className="space-y-12">
+            {/* Neighborhood Expansion */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              className="p-10 rounded-[2.5rem] border border-white/10 bg-white/5 space-y-6"
             >
-              <GlassCard className="p-10 border-primary/20 backdrop-blur-3xl rounded-[2.5rem] shadow-glass">
-                <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-                  <HelpCircle className="text-primary w-8 h-8" /> Service FAQs
+              <h2 className="text-3xl font-bold flex items-center gap-3">
+                <MapPin className="text-primary" /> Neighborhood Priority Units
+              </h2>
+              <p className="text-muted-foreground">
+                We have dedicated service units stationed in the following Mississauga neighborhoods to ensure the fastest possible arrival times:
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {data.localKeywords.map((neighborhood, i) => (
+                  <span key={i} className="px-5 py-2 bg-primary/10 border border-primary/20 rounded-full text-sm font-bold text-primary">
+                    {neighborhood}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+          {/* Right Column: Sticky Widgets */}
+          <div className="lg:col-span-4 space-y-10">
+            <div className="sticky top-28 space-y-10">
+              <GlassCard className="p-8 border-primary/20 backdrop-blur-3xl rounded-[2rem] shadow-glass">
+                <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                  <HelpCircle className="text-primary w-6 h-6" /> Local FAQs
                 </h2>
                 <Accordion type="single" collapsible className="w-full">
-                  {data.faqs.map((faq: any, i: number) => (
+                  {data.faqs.map((faq, i) => (
                     <AccordionItem key={i} value={`item-${i}`} className="border-white/10">
-                      <AccordionTrigger className="text-left font-bold py-5 text-xl hover:text-primary hover:no-underline">
+                      <AccordionTrigger className="text-left font-bold py-4 hover:text-primary transition-colors hover:no-underline">
                         {faq.q}
                       </AccordionTrigger>
-                      <AccordionContent className="text-muted-foreground text-lg leading-relaxed pb-6">
+                      <AccordionContent className="text-muted-foreground leading-relaxed pb-4">
                         {faq.a}
                       </AccordionContent>
                     </AccordionItem>
                   ))}
                 </Accordion>
               </GlassCard>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="rounded-4xl bg-primary/10 p-10 border border-primary/20 flex flex-col items-center text-center space-y-6"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl animate-pulse" />
-                <Clock className="w-16 h-16 text-primary relative z-10" />
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-black text-3xl">Need Priority Help?</h4>
-                <p className="text-muted-foreground text-lg italic">Our dispatchers are active in your area now.</p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 w-full">
-                <Button onClick={() => setIsBookingOpen(true)} className="flex-1 btn-premium h-14 rounded-xl text-lg">
-                  Book Priority
-                </Button>
-                <a href="tel:6475504003" className="flex-1">
-                  <Button variant="outline" className="w-full h-14 rounded-xl border-primary/40 text-primary hover:bg-primary/10 text-lg gap-2">
-                    <Phone className="w-5 h-5" /> Call Dispatch
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="rounded-[2rem] bg-destructive p-8 text-center space-y-6 shadow-2xl shadow-destructive/20"
+              >
+                <div className="flex justify-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center animate-pulse">
+                    <Info className="w-8 h-8 text-white" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <h4 className="font-black text-2xl text-white">Emergency Now?</h4>
+                  <p className="text-white/80 font-medium">Don't wait for water damage.</p>
+                </div>
+                <a href="tel:6475504003" className="block">
+                  <Button className="w-full h-14 bg-white text-destructive hover:bg-white/90 font-black text-lg rounded-xl">
+                    <Phone className="w-5 h-5 mr-2" /> (647) 550-4003
                   </Button>
                 </a>
-              </div>
-            </motion.div>
+              </motion.div>
+              <GlassCard className="p-8 border-white/10">
+                <h4 className="font-bold mb-4 flex items-center gap-2">
+                   <Clock className="w-4 h-4 text-primary" /> Hours & Service
+                </h4>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li className="flex justify-between border-b border-white/5 pb-2">
+                    <span>Emergency Response</span>
+                    <span className="text-primary font-bold">24/7</span>
+                  </li>
+                  <li className="flex justify-between border-b border-white/5 pb-2">
+                    <span>Standard Service</span>
+                    <span className="text-white">7AM - 9PM</span>
+                  </li>
+                  <li className="flex justify-between pb-2">
+                    <span>Local Coverage</span>
+                    <span className="text-white">Mississauga/Peel</span>
+                  </li>
+                </ul>
+              </GlassCard>
+            </div>
           </div>
         </div>
       </section>
+      <div className="py-16 bg-white/5">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-8">Ready to Restore Your Peace of Mind?</h2>
+          <Button onClick={() => setIsBookingOpen(true)} className="btn-premium h-16 px-16 text-xl rounded-2xl">
+            Book My Appointment Now
+          </Button>
+        </div>
+      </div>
       <BookingModal open={isBookingOpen} onOpenChange={setIsBookingOpen} />
     </div>
   );

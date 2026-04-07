@@ -1,6 +1,19 @@
 import React from "react";
 import { motion, type Variants } from "framer-motion";
-import { Shield, Clock, Award, Star, ArrowRight, Wrench, Thermometer, Search, CheckCircle2 } from "lucide-react";
+import { 
+  Shield, 
+  Clock, 
+  Award, 
+  Star, 
+  ArrowRight, 
+  Wrench, 
+  Thermometer, 
+  Search, 
+  CheckCircle2, 
+  ShieldCheck, 
+  Snowflake,
+  Activity
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { BookingModal } from "@/components/BookingModal";
@@ -19,11 +32,11 @@ export function HomePage() {
     { label: "Verified Reviews", value: "1.2k" },
     { label: "Active in Mississauga", value: "12 Yrs" },
   ];
-  const services = [
-    { title: "Drain Cleaning", slug: "drain-cleaning", desc: "Advanced hydro-jetting and snaking for total blockage removal.", icon: Search },
-    { title: "Pipe Repair", slug: "pipe-repair", desc: "Copper, PEX, and main line repairs with full diagnostic reports.", icon: Wrench },
-    { title: "Water Heaters", slug: "water-heaters", desc: "Same-day installation for tankless and high-efficiency systems.", icon: Thermometer },
-    { title: "24/7 Emergency", slug: "emergency", desc: "Priority dispatch for floods, bursts, and major sewage backups.", icon: Clock },
+  const featuredServices = [
+    { title: "Emergency Plumber", slug: "emergency-plumbing", desc: "Priority dispatch for floods and pipe bursts.", icon: ShieldCheck },
+    { title: "Drain Cleaning", slug: "drain-cleaning", desc: "Precision hydro-jetting for total blockage removal.", icon: Search },
+    { title: "Pipe Repair", slug: "pipe-repair", icon: Wrench, desc: "Leak detection and trenchless pipe restoration.", slug_real: "pipe-repair" },
+    { title: "Frozen Pipes", slug: "frozen-pipes", desc: "Winter care and safe thawing for Peel winters.", icon: Snowflake },
   ];
   return (
     <div className="space-y-0 overflow-x-hidden">
@@ -45,7 +58,7 @@ export function HomePage() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold text-xs tracking-widest uppercase"
             >
               <Shield className="w-4 h-4" />
-              Certified Mississauga Master Plumbers
+              Licensed Mississauga Master Plumbers
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -54,14 +67,7 @@ export function HomePage() {
               className="relative"
             >
               <h1 className="text-5xl md:text-8xl font-display font-bold leading-tight tracking-tight">
-                Mississauga’s <span className="text-primary text-glow relative inline-block">
-                  24/7 Experts
-                  <motion.span
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 2 }}
-                  />
-                </span>
+                Mississauga’s <br/><span className="text-primary text-glow">24/7 Experts</span>
               </h1>
             </motion.div>
             <motion.p
@@ -70,7 +76,7 @@ export function HomePage() {
               transition={{ delay: 0.3 }}
               className="text-xl text-muted-foreground leading-relaxed max-w-2xl"
             >
-              Licensed, bonded, and insured. We provide premium plumbing solutions across Peel Region with a guaranteed <span className="text-foreground font-bold">30-minute emergency arrival.</span>
+              Licensed, bonded, and insured. We provide premium plumbing solutions across Peel Region with a guaranteed <span className="text-foreground font-bold">30-minute emergency arrival time.</span>
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -81,8 +87,8 @@ export function HomePage() {
               <Button onClick={() => setIsBookingOpen(true)} className="btn-premium text-lg h-16 px-10 rounded-2xl group">
                 Book Service Online <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-              <a href="tel:6475504003">
-                <Button variant="outline" className="h-16 px-10 text-lg border-white/20 hover:bg-white/5 rounded-2xl bg-white/5 backdrop-blur-sm">
+              <a href="tel:6475504003" className="w-full sm:w-auto">
+                <Button variant="outline" className="w-full h-16 px-10 text-lg border-white/20 hover:bg-white/5 rounded-2xl bg-white/5 backdrop-blur-sm">
                   Call: (647) 550-4003
                 </Button>
               </a>
@@ -91,13 +97,13 @@ export function HomePage() {
         </div>
       </section>
       {/* Stats Section */}
-      <motion.section 
+      <motion.section
         variants={fadeInUp}
         initial="initial"
         whileInView="whileInView"
         viewport={{ once: true, margin: "-100px" }}
         transition={fadeTransition}
-        className="py-20 border-y border-white/5 bg-white/5 backdrop-blur-md"
+        className="py-16 border-y border-white/5 bg-white/5 backdrop-blur-md"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
@@ -113,7 +119,7 @@ export function HomePage() {
       {/* Services Grid */}
       <section className="py-24 md:py-32 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div 
+          <motion.div
             variants={fadeInUp}
             initial="initial"
             whileInView="whileInView"
@@ -122,12 +128,12 @@ export function HomePage() {
             className="text-center mb-20 space-y-4"
           >
             <h2 className="text-4xl md:text-6xl font-bold tracking-tight">The Pro Standard</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              Precision plumbing for residential and commercial properties throughout the Mississauga area.
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">
+              Precision plumbing for residential and commercial properties throughout Mississauga, from Port Credit to Meadowvale.
             </p>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, idx) => (
+            {featuredServices.map((service, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
@@ -137,7 +143,7 @@ export function HomePage() {
               >
                 <GlassCard className="h-full space-y-6 group hover:translate-y-[-12px] transition-all duration-500 hover:border-primary/50">
                   <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center transition-all group-hover:bg-primary group-hover:text-primary-foreground">
-                    <service.icon className="w-7 h-7" />
+                    {service.icon ? <service.icon className="w-7 h-7" /> : <Wrench className="w-7 h-7" />}
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold mb-3">{service.title}</h3>
@@ -145,75 +151,48 @@ export function HomePage() {
                   </div>
                   <Link to={`/services/${service.slug}`} className="block pt-4">
                     <Button variant="link" className="p-0 text-primary h-auto group font-bold hover:no-underline">
-                      View Service Details <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                      Service Details <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </Link>
                 </GlassCard>
               </motion.div>
             ))}
           </div>
+          <div className="mt-16 text-center">
+            <Link to="/services">
+              <Button variant="outline" className="h-14 px-12 border-white/20 rounded-xl hover:bg-white/5 text-lg">
+                View All Plumbing Services
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
       <ServiceAreaMap />
-      {/* Emergency Callout */}
-      <motion.section 
-        variants={fadeInUp}
-        initial="initial"
-        whileInView="whileInView"
-        viewport={{ once: true, margin: "-100px" }}
-        transition={fadeTransition}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
-      >
-        <div className="rounded-[3rem] bg-destructive p-12 relative overflow-hidden shadow-2xl shadow-destructive/30">
-          <div className="absolute top-0 right-0 p-8 opacity-10">
-            <Clock className="w-64 h-64" />
-          </div>
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
-            <div className="space-y-6 text-center md:text-left">
-              <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight">Active Leak?</h2>
-              <p className="text-white/90 text-xl max-w-xl font-medium">
-                Don't wait for water damage to escalate. Our dispatch team is on standby 24/7 in your neighborhood.
-              </p>
-            </div>
-            <div className="flex flex-col gap-6 w-full md:w-auto items-center">
-              <a href="tel:6475504003" className="w-full md:w-auto">
-                <Button className="w-full md:w-auto bg-white text-destructive hover:bg-white/90 text-3xl font-black py-10 px-16 rounded-[2rem] h-auto shadow-2xl group transition-all">
-                  (647) 550-4003
-                </Button>
-              </a>
-              <div className="flex items-center gap-3 text-white/90 font-bold uppercase tracking-widest text-xs">
-                <div className="w-2 h-2 bg-white rounded-full animate-ping" />
-                Emergency Response Units Active
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.section>
-      {/* Trust Factors */}
-      <section className="py-24 bg-white/5">
+      {/* Trust & Testimonial Section */}
+      <section className="py-24 bg-white/5 relative overflow-hidden">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 blur-[150px] rounded-full" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <motion.div 
+            <motion.div
               variants={fadeInUp}
               initial="initial"
               whileInView="whileInView"
-              viewport={{ once: true, margin: "-100px" }}
-              transition={fadeTransition}
+              viewport={{ once: true }}
               className="space-y-10"
             >
-              <h2 className="text-4xl md:text-5xl font-bold leading-tight">The Trusted Choice for <br/>Mississauga Homeowners</h2>
+              <h2 className="text-4xl md:text-5xl font-bold leading-tight">Trusted by Homeowners <br/>Across Peel Region</h2>
               <div className="space-y-8">
                 {[
-                  { t: "Licensed Master Plumbers", d: "100% of our technicians carry Red Seal certification and have cleared rigorous background checks." },
-                  { t: "Upfront Transparent Pricing", d: "Clear flat-rate quotes provided before we even touch a wrench. No hidden travel or overtime fees." },
-                  { t: "Lifetime Warranty", d: "We stand behind our work with industry-leading warranties on all parts and professional labor." }
+                  { t: "Licensed Master Plumbers", d: "100% of our technicians are Red Seal certified with background clearances." },
+                  { t: "Upfront Fixed Pricing", d: "Clear quotes provided before any work begins. No travel or surprise fees." },
+                  { t: "Lifetime Craftsmanship Warranty", d: "We stand behind every wrench turn with an industry-leading service guarantee." }
                 ].map((item, i) => (
                   <div key={i} className="flex gap-6 group">
-                    <div className="mt-1 transition-transform group-hover:scale-125 duration-300">
+                    <div className="mt-1 shrink-0 transition-transform group-hover:scale-125 duration-300">
                       <CheckCircle2 className="w-8 h-8 text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-bold text-xl mb-2">{item.t}</h4>
+                      <h4 className="font-bold text-xl mb-1">{item.t}</h4>
                       <p className="text-muted-foreground text-lg leading-relaxed">{item.d}</p>
                     </div>
                   </div>
@@ -224,27 +203,21 @@ export function HomePage() {
               initial={{ opacity: 0, rotateY: 20 }}
               whileInView={{ opacity: 1, rotateY: 0 }}
               viewport={{ once: true }}
-              className="relative perspective-1000"
+              className="relative"
             >
-               <div className="absolute inset-0 bg-primary/10 blur-[120px] rounded-full animate-pulse" />
-               <motion.div
-                 animate={{ y: [0, -15, 0] }}
-                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-               >
-                 <GlassCard className="relative z-10 p-16 border-white/20 backdrop-blur-2xl rounded-4xl shadow-glass text-center space-y-8 overflow-hidden" hoverable={false}>
-                    <div className="w-24 h-24 bg-primary/20 rounded-3xl flex items-center justify-center mx-auto mb-4 rotate-12 transition-transform hover:rotate-0 duration-500">
-                      <Award className="w-12 h-12 text-primary" />
-                    </div>
-                    <h3 className="text-3xl font-bold italic leading-snug">"Unmatched response times and professional execution. They are the only ones we call."</h3>
-                    <div className="space-y-1">
-                      <p className="font-black text-primary uppercase tracking-[0.3em] text-sm">Mississauga Gold Standard</p>
-                      <p className="text-muted-foreground font-medium">Home Improvement Excellence 2024</p>
-                    </div>
-                    <div className="flex justify-center gap-1 pt-4">
-                      {[1,2,3,4,5].map(s => <Star key={s} className="w-5 h-5 text-primary fill-primary" />)}
-                    </div>
-                 </GlassCard>
-               </motion.div>
+              <GlassCard className="p-16 border-white/20 backdrop-blur-2xl rounded-4xl text-center space-y-8" hoverable={false}>
+                <div className="w-20 h-20 bg-primary/20 rounded-3xl flex items-center justify-center mx-auto mb-4 rotate-12 group-hover:rotate-0 transition-transform duration-500">
+                  <Award className="w-10 h-10 text-primary" />
+                </div>
+                <h3 className="text-3xl font-bold italic leading-snug">"The only plumbers in Mississauga we trust with our home. Rapid, clean, and professional."</h3>
+                <div>
+                  <p className="font-black text-primary uppercase tracking-[0.3em] text-sm">Mississauga Gold Standard</p>
+                  <p className="text-muted-foreground font-medium">Peel Business Excellence 2024</p>
+                </div>
+                <div className="flex justify-center gap-1 pt-4">
+                  {[1,2,3,4,5].map(s => <Star key={s} className="w-5 h-5 text-primary fill-primary" />)}
+                </div>
+              </GlassCard>
             </motion.div>
           </div>
         </div>
