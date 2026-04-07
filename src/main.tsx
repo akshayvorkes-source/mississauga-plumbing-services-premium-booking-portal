@@ -13,6 +13,7 @@ import { RouteErrorBoundary } from '@/components/RouteErrorBoundary';
 import '@/index.css'
 import { HomePage } from '@/pages/HomePage'
 import { ServicesPage } from '@/pages/ServicesPage'
+import { ServiceDetailPage } from '@/pages/ServiceDetailPage'
 import { EmergencyPage } from '@/pages/EmergencyPage'
 import { SiteLayout } from '@/components/layout/SiteLayout'
 import { Toaster } from '@/components/ui/sonner'
@@ -26,6 +27,11 @@ const router = createBrowserRouter([
   {
     path: "/services",
     element: <SiteLayout><ServicesPage /></SiteLayout>,
+    errorElement: <RouteErrorBoundary />,
+  },
+  {
+    path: "/services/:slug",
+    element: <SiteLayout><ServiceDetailPage /></SiteLayout>,
     errorElement: <RouteErrorBoundary />,
   },
   {

@@ -16,7 +16,7 @@ const bookingSchema = z.object({
   phone: z.string().min(10, "Valid phone number required"),
   email: z.string().email("Invalid email address"),
   serviceType: z.string().min(1, "Please select a service"),
-  isEmergency: z.boolean().default(false),
+  isEmergency: z.boolean(),
   preferredDate: z.string().optional(),
 });
 type BookingValues = z.infer<typeof bookingSchema>;
@@ -28,14 +28,19 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
   const form = useForm<BookingValues>({
     resolver: zodResolver(bookingSchema),
     defaultValues: {
+      name: "",
+      phone: "",
+      email: "",
+      serviceType: "",
       isEmergency: false,
+      preferredDate: "",
     },
   });
   const isEmergency = form.watch("isEmergency");
   async function onSubmit(data: BookingValues) {
     console.log("Booking Data:", data);
     toast.success("Request Sent!", {
-      description: data.isEmergency 
+      description: data.isEmergency
         ? "Emergency dispatch initiated. We will call you in < 5 mins."
         : "Your booking request is confirmed. We'll contact you shortly.",
     });
@@ -62,18 +67,20 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
                 control={form.control}
                 name="isEmergency"
                 render={({ field }) => (
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-destructive"
-                    />
-                  </FormControl>
+                  <FormItem>
+                    <FormControl>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className="data-[state=checked]:bg-destructive"
+                      />
+                    </FormControl>
+                  </FormItem>
                 )}
               />
             </div>
             {isEmergency && (
-              <Alert className="bg-destructive/20 border-destructive/30 text-white animate-pulse">
+              <Alert className="bg-destructive/20 border-destructive/30 text-white animate-pulse border-none">
                 <Clock className="h-4 w-4 text-white" />
                 <AlertDescription className="font-bold">
                   High Priority: Emergency plumbers dispatched immediately.
@@ -127,7 +134,7 @@ export function BookingModal({ open, onOpenChange }: BookingModalProps) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Service Required</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="bg-white/5 border-white/10">
                         <SelectValue placeholder="Select service type" />
